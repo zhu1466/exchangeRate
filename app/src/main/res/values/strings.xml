@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">exchangeRate</string>
+    <string name="test">Input RMB</string>
+    <string name="ans">折换为：</string>
+    <string name="dollar">DOLLAR</string>
+    <string name="euro">EURO</string>
+    <string name="won">WON</string>
+    <string name="config">config</string>
+    <string name="save"> save </string>
+    <string name="back"> back </string>
+    <string name="rate1">DOLLAR RATE</string>
+    <string name="rate2">EURO   RATE</string>
+    <string name="rate3">WON    RATE</string>
+</resources>
