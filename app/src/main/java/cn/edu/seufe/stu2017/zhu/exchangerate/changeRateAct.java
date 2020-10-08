@@ -1,6 +1,8 @@
 package cn.edu.seufe.stu2017.zhu.exchangerate;
 
+import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
@@ -35,18 +37,29 @@ public class changeRateAct extends AppCompatActivity{
 
 
     }
+
     public void saveRate(View v){
-        double rate1 = Double.valueOf(et1.getText().toString());
-        double rate2 = Double.valueOf(et2.getText().toString());
-        double rate3 = Double.valueOf(et3.getText().toString());
+        float rate1 = Float.valueOf(et1.getText().toString());
+        float rate2 = Float.valueOf(et2.getText().toString());
+        float rate3 = Float.valueOf(et3.getText().toString());
         Intent intent = new Intent();
         intent.setClass(this, MainActivity.class) ;
-        double rate[] = new double[3];
+        float rate[] = new float[3];
         rate[0] = rate1;
         rate[1] = rate2;
         rate[2] = rate3;
         intent.putExtra("rate",rate);
+
+
+        SharedPreferences sp = getSharedPreferences("rate", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor ed = sp.edit();
+        ed.putFloat("R2D", rate1);
+        ed.putFloat("R2E", rate2);
+        ed.putFloat("R2W", rate3);
+        ed.commit();
+
         startActivity(intent);
+
 
     }
     public void back(View v){
