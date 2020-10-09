@@ -4,6 +4,9 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.app.Service;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -12,7 +15,6 @@ import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 
 import org.jsoup.Jsoup;
@@ -27,6 +29,8 @@ import java.io.Reader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener,Runnable{
 
@@ -35,6 +39,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     double rmb;
     float R2D, R2E, R2W;
     Handler handler;
+    int ONE_DAY_MSECOND = 1000*60*60*24;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,6 +67,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         this.R2E = sp.getFloat("R2E",(float) 0.126);
         this.R2W = sp.getFloat("R2W",(float) 127.1467);
 
+        AlarmManager aManager=(AlarmManager)getSystemService(Service.ALARM_SERVICE);
+        Intent intent=new Intent();
+        // 启动一个名为DialogActivity的Activity
+        intent.setClass(this, getRate.class);
+        // 获取PendingIntent对象
+        // requestCode 参数用来区分不同的PendingIntent对象
+        // flag 参数常用的有4个值：
+        //  FLAG_CANCEL_CURRENT 当需要获取的PendingIntent对象已经存在时，先取消当前的对象，再获取新的；
+        // 	FLAG_ONE_SHOT 获取的PendingIntent对象只能使用一次，再次使用需要重新获取
+        // 	FLAG_NO_CREATE 如果获取的PendingIntent对象不存在，则返回null
+        //	FLAG_UPDATE_CURRENT 如果希望获取的PendingIntent对象与已经存在的PendingIntent对象相比，如果只是Intent附加的数据不同，那么当前存在的PendingIntent对象不会被取消，而是重新加载新的Intent附加的数据
+
+        // 设置定时任务，这里使用绝对时间，即使休眠也提醒，程序启动后过一天会启动新的Activity，在这里配置一年的任务
+        int cou = 0;
+        for (cou=0; cou<365;cou++){
+            PendingIntent pi=PendingIntent.getActivity(this, cou, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+            aManager.set(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+10000*cou, pi);
+        }
+
 
         //多线程尝试
         Thread t = new Thread(this);
@@ -71,17 +95,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void handleMessage(@NonNull Message msg) {
                 if(msg.what == 5){
-                    String str = (String)msg.obj;
-                    Log.i(TAG, "handleMessage:getMessage msg = "+ str);
-                    Button b = findViewById(R.id.button3);
-                    b.setText(str);
+                    List<String> list2 = (List<String>)msg.obj;
+
                 }
                 super.handleMessage(msg);
             }
         };
-
-
-
 
 
     }
@@ -125,6 +144,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
+    public void goList(View v){
+        Intent intent = new Intent();
+        intent.setClass(this, showRate.class);
+        startActivity(intent);
+    }
+
     private String inputStream2String(InputStream inputStream)
             throws IOException {
         final int bufferSize = 1024;
@@ -147,8 +172,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void run() {
         Log.i(TAG, "run:zhu1466()...................");
         Message msg = handler.obtainMessage(5);
-        msg.obj = "hello zhu";
-        handler.sendMessage(msg);
+
+
+        List<String> list2 =  new ArrayList<String>();
 
 
         //在子线程中获得网络数据
@@ -181,10 +207,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         Log.i(TAG,
                 "run: " + doc.title());
         Elements tables = doc.getElementsByTag("table");
-        Element table6 = tables.get(5);
+        Element table6 = tables.get(0);
         //获取TD中的数据
         Elements tds = table6.getElementsByTag("td");
-        for(int i=0;i<tds.size();i+=8){
+        for(int i=0;i<tds.size();i+=6){
             Element td1 = tds.get(i);
             Element td2 = tds.get(i+5);
             String str1 = td1.text();
@@ -192,9 +218,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             Log.i(TAG,
                     "run: " + str1 + "==>" + val);
             float v = 100f / Float.parseFloat(val);
+            list2.add(str1 + "==>" + val);
             //获取数据并返回……
-            System.out.println("!!!!"+v);
         }
+        msg.obj = list2;
+        handler.sendMessage(msg);
+
 
 
 

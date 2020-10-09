@@ -11,4 +11,5 @@
     <string name="rate1">DOLLAR RATE</string>
     <string name="rate2">EURO   RATE</string>
     <string name="rate3">WON    RATE</string>
+    <string name="show"> SHOW</string>
 </resources>
