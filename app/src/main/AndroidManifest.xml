@@ -12,7 +12,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".calByRate"></activity>
+
+        <activity android:name=".girdviewactivity">
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.MAIN"
+                    android:exported="true" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity android:name=".calByRate" />
         <activity android:name=".list2Act">
             <intent-filter>
                 <action

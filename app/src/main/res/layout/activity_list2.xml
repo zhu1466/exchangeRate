@@ -27,7 +27,7 @@
             android:id="@id/android:empty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="你好" />
+            android:text="empty!!!!!" />
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

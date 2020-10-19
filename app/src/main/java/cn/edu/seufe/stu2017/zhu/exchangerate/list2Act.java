@@ -3,7 +3,9 @@ package cn.edu.seufe.stu2017.zhu.exchangerate;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ListActivity;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -18,16 +20,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+//用来实现监听listView，以及用户输入监听
 
-public class list2Act extends ListActivity implements AdapterView.OnItemClickListener{
+public class list2Act extends ListActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
     private static final String TAG = "list2TAG";
+    List<HashMap<String, String>> listItems;
+    MyAdapter ma;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list2);
-        List<HashMap<String, String>> listItems;
         listItems = new ArrayList<HashMap<String, String>>();
 //        for(int i = 0; i <10 ; i++){
 //            HashMap<String, String> map = new HashMap<String, String>();
@@ -55,17 +59,20 @@ public class list2Act extends ListActivity implements AdapterView.OnItemClickLis
 //        SimpleAdapter listItemAdapter = new SimpleAdapter(this,listItems,R.layout.list_item,
 //                new String[]{"ItemTitle","ItemDetail"},new int[]{R.id.textView6,R.id.textView8});
 //        setListAdapter(listItemAdapter);
-
-        MyAdapter ma = new MyAdapter(this,R.layout.list_item, (ArrayList<HashMap<String, String>>) listItems);
 //        this.setListAdapter(ma);
 //        lv = (ListView)findViewById(R.id.listview2);
-//        //lv.setAdapter(ma);
+//        lv.setAdapter(ma);
 //        lv.setOnItemClickListener(this);
+
+        ma = new MyAdapter(this,R.layout.list_item, (ArrayList<HashMap<String, String>>) listItems);
+
 
         ListView lv = this.getListView();
         lv.setAdapter(ma);
         lv.setOnItemClickListener(this);
+        lv.setOnItemLongClickListener(this);
 
+        
 
 
     }
@@ -84,5 +91,22 @@ public class list2Act extends ListActivity implements AdapterView.OnItemClickLis
         intent.putExtra("kind", s1);
         startActivity(intent);
 
+    }
+
+    @Override
+    public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+        AlertDialog.Builder bulider = new AlertDialog.Builder(this);
+        bulider.setTitle("提示").setMessage("请确认是否删除当前数据").setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Log.i("对话框","onItemLongClick:");
+                listItems.remove(position);
+                ma.notifyDataSetChanged();
+
+
+            }
+        }).setNegativeButton("NO", null);
+        bulider.create().show();
+        return true;
     }
 }
