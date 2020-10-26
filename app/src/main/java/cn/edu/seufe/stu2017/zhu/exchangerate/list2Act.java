@@ -1,25 +1,26 @@
 package cn.edu.seufe.stu2017.zhu.exchangerate;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.ListActivity;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import cn.edu.seufe.stu2017.zhu.exchangerate.frame.db.RateManager;
 //用来实现监听listView，以及用户输入监听
 
 public class list2Act extends ListActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
@@ -53,6 +54,24 @@ public class list2Act extends ListActivity implements AdapterView.OnItemClickLis
             map2.put("ItemDetail",mapValue);
             listItems.add(map2);
         }
+
+        //查询数据库版本号
+        String query = "select sqlite_version() AS sqlite_version";
+        SQLiteDatabase db = SQLiteDatabase.openOrCreateDatabase(":memory:",null);
+        Cursor cursor = db.rawQuery(query, null);
+        String sqliteVersion="";
+        if(cursor.moveToNext()){
+            sqliteVersion = cursor.getString(0);
+            Log.i(TAG,"databaseVersion"+sqliteVersion);
+        }
+        RateManager rm = new RateManager(this);
+        RateItem rateItem = new RateItem();
+        rateItem.setCurname("test1");
+        rateItem.setCurrate("9.99");
+        rm.add(rateItem);
+        RateItem rateItem1 = rm.findById(0);
+        RateItem rateItem2 = rm.findById(1);
+
 
 
 

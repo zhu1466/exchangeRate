@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".frame.FragmentMainTest">
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_main"
+        android:name="cn.edu.seufe.stu2017.zhu.exchangerate.frame.HomeFragment"
+        app:layout_constraintVertical_weight="10"/>
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_func"
+        android:name="cn.edu.seufe.stu2017.zhu.exchangerate.frame.FuncFragment"
+        app:layout_constraintVertical_weight="10"/>
+
+    <fragment
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_setting2"
+        android:name="cn.edu.seufe.stu2017.zhu.exchangerate.frame.SettingFragment"
+        app:layout_constraintVertical_weight="10"/>
+
+    <RadioGroup
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bottomGroup"
+        android:orientation="horizontal"
+        tools:ignore="MissingConstraints">
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioHome"
+            android:text="home"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioFunc"
+            android:text="func"/>
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/radioSetting"
+            android:text="setting"/>
+    </RadioGroup>
+</androidx.constraintlayout.widget.ConstraintLayout>

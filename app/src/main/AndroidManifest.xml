@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="cn.edu.seufe.stu2017.zhu.exchangerate">
 
     <uses-permission android:name="android.permission.INTERNET" />
@@ -12,7 +13,19 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-
+<!--        <activity android:name=".frame.FuncFragment"-->
+<!--            tools:ignore="Instantiatable"></activity>-->
+<!--        <activity android:name=".frame.HomeFragment"-->
+<!--            tools:ignore="Instantiatable"></activity>-->
+        <activity android:name=".frame.FragmentMainTest" />
+        <activity android:name=".frame.FrameActivity" >
+            <intent-filter>
+                <action
+                    android:name="android.intent.action.MAIN"
+                    android:exported="true" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".girdviewactivity">
             <intent-filter>
                 <action
@@ -22,7 +35,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity android:name=".calByRate" />
         <activity android:name=".list2Act">
             <intent-filter>
