@@ -1,4 +1,4 @@
-package cn.edu.seufe.stu2017.zhu.exchangerate.frame.db;
+package cn.edu.seufe.stu2017.zhu.exchangerate.db;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import cn.edu.seufe.stu2017.zhu.exchangerate.RateItem;
-import cn.edu.seufe.stu2017.zhu.exchangerate.frame.db.DBHepler;
 
 public class RateManager {
     private static final String TAG="DBOperate";
@@ -69,6 +68,22 @@ public class RateManager {
         SQLiteDatabase db = dbHelper.getWritableDatabase();
         Cursor cursor = db.query(TBName, null,
                 "CURNAME=?", new String[]{CurName},
+                null,null, null);
+        RateItem rateItem = null;
+        if(cursor != null && cursor.moveToFirst()){
+            rateItem = new RateItem();
+            rateItem.setId(cursor.getInt(cursor.getColumnIndex("ID")));
+            rateItem.setCurname(cursor.getString(cursor.getColumnIndex("CURNAME")));
+            rateItem.setCurrate(cursor.getString(cursor.getColumnIndex("CURRATE")));
+            cursor.close();
+        }
+        db.close();
+        return rateItem;
+    }
+    public RateItem findById(int id){
+        SQLiteDatabase db = dbHelper.getWritableDatabase();
+        Cursor cursor = db.query(TBName, null,
+                "id=?", new String[]{String.valueOf(id)},
                 null,null, null);
         RateItem rateItem = null;
         if(cursor != null && cursor.moveToFirst()){

@@ -13,16 +13,18 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-<!--        <activity android:name=".frame.FuncFragment"-->
-<!--            tools:ignore="Instantiatable"></activity>-->
-<!--        <activity android:name=".frame.HomeFragment"-->
-<!--            tools:ignore="Instantiatable"></activity>-->
+        <activity android:name=".frame.viewpage.ViewPageActivity"></activity>
+        <!-- <activity android:name=".frame.FuncFragment" -->
+        <!-- tools:ignore="Instantiatable"></activity> -->
+        <!-- <activity android:name=".frame.HomeFragment" -->
+        <!-- tools:ignore="Instantiatable"></activity> -->
         <activity android:name=".frame.FragmentMainTest" />
-        <activity android:name=".frame.FrameActivity" >
+        <activity android:name=".frame.FrameActivity">
             <intent-filter>
                 <action
                     android:name="android.intent.action.MAIN"
                     android:exported="true" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

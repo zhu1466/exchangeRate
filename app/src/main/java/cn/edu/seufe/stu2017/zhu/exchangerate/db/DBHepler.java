@@ -1,4 +1,4 @@
-package cn.edu.seufe.stu2017.zhu.exchangerate.frame.db;
+package cn.edu.seufe.stu2017.zhu.exchangerate.db;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;

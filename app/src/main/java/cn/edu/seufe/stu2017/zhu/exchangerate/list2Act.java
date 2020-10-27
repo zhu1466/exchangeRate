@@ -20,7 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import cn.edu.seufe.stu2017.zhu.exchangerate.frame.db.RateManager;
+import cn.edu.seufe.stu2017.zhu.exchangerate.db.RateManager;
 //用来实现监听listView，以及用户输入监听
 
 public class list2Act extends ListActivity implements AdapterView.OnItemClickListener, AdapterView.OnItemLongClickListener{
